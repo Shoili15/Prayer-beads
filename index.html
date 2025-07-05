@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mantra Counting App</title>
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    background: linear-gradient(to right, #c5ceda, #94b4de, #4494c9,#03436e);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  h1 {
+    font-weight: 700;
+    margin-bottom: 0.1em;
+    letter-spacing: 0.1em;
+  }
+  .counter {
+    font-size: 4rem;
+    margin: 0.2em 0;
+  }
+  .rounds, .goals {
+    font-size: 1.5rem;
+    margin: 0.1em 0;
+  }
+  button {
+    background: #8bb2ec;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    margin: 10px 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #222;
+    font-weight: bold;
+    box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #ffb347;
+  }
+  label {
+    margin: 0 8px;
+    font-weight: 600;
+  }
+  input[type=number] {
+    width: 70px;
+    font-size: 1.1rem;
+    text-align: center;
+    border-radius: 6px;
+    border: none;
+    padding: 6px;
+    margin-left: 6px;
+  }
+  .settings {
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<h1>🕉️ Mantra Counter 🕉️</h1>
+<p style="font-size: 1.5rem; font-style: italic; margin-bottom: 20px;">
+  ॐ ত্রৈয়ম্বকম্ য়জামহে সূগন্ধিম্ পূষ্টিবর্ধনম্ । উর্বারূকমিব বন্ধনাম্ মৃত্যুরমোক্ষিয় মামৃতাত &nbsp;  &nbsp; 
+</p>
+
+<div class="counter" id="count">0</div>
+<div class="rounds" id="rounds">Rounds Completed: 0</div>
+<div class="goals" id="goals">Spiritual Goals: 0</div>
+
+<div>
+  <button id="incrementBtn">Count Mantra</button>
+  <button id="resetBtn">Reset</button>
+</div>
+
+<div class="settings">
+  <label for="maxCountInput">Max Count per Round:</label>
+  <input type="number" id="maxCountInput" min="1" value="100" />
+  <label for="goalRoundsInput">Rounds per Goal:</label>
+  <input type="number" id="goalRoundsInput" min="1" value="10" />
+  <button id="applySettingsBtn">Apply Settings</button>
+</div>
+
+<script>
+ 
+  let maxCount = 100;
+  let roundsPerGoal = 10;
+
+  let count = 0;
+  let rounds = 0;
+  let goals = 0;
+
+  const countDisplay = document.getElementById('count');
+  const roundsDisplay = document.getElementById('rounds');
+  const goalsDisplay = document.getElementById('goals');
+  const incrementBtn = document.getElementById('incrementBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const maxCountInput = document.getElementById('maxCountInput');
+  const goalRoundsInput = document.getElementById('goalRoundsInput');
+  const applySettingsBtn = document.getElementById('applySettingsBtn');
+
+  function updateDisplay() {
+    countDisplay.textContent = count;
+    roundsDisplay.textContent = `Rounds Completed: ${rounds}`;
+    goalsDisplay.textContent = `Spiritual Goals: ${goals}`;
+  }
+
+  incrementBtn.addEventListener('click', () => {
+    count++;
+    if (count > maxCount) {
+      count = 1;
+      rounds++;
+      if (rounds >= roundsPerGoal) {
+        rounds = 0;
+        goals++;
+        alert('✨ Spiritual Goal Achieved! ✨');
+      }
+    }
+    updateDisplay();
+  });
+
+  resetBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to reset the count?')) {
+      count = 0;
+      rounds = 0;
+      goals = 0;
+      updateDisplay();
+    }
+  });
+
+  applySettingsBtn.addEventListener('click', () => {
+    const newMaxCount = parseInt(maxCountInput.value);
+    const newGoalRounds = parseInt(goalRoundsInput.value);
+
+    if (newMaxCount > 0 && newGoalRounds > 0) {
+      maxCount = newMaxCount;
+      roundsPerGoal = newGoalRounds;
+
+      count = 0;
+      rounds = 0;
+      goals = 0;
+      updateDisplay();
+
+      alert(`Settings updated: Max Count = ${maxCount}, Rounds per Goal = ${roundsPerGoal}`);
+    } else {
+      alert('Please enter positive numbers for settings.');
+    }
+  });
+
+
+  updateDisplay();
+</script>
+
+</body>
+</html>
